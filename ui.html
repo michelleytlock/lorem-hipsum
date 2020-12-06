@@ -1,0 +1,46 @@
+<h2>Lorem Hipsum</h2>
+<p>Sentences: <input id="sentences" value="5" /></p>
+<button id="generate">Generate</button>
+<button id="cancel">Cancel</button>
+
+<!-- <script>
+  document.getElementById("generate").onclick = () => {
+    const hipsum = document.getElementById("sentences");
+    const count = parseInt(hipsum.value, 10);
+    const query =
+      "https://hipsum.co/api/?type=hipster-centric&sentences=" + count;
+
+    let request = new XMLHttpRequest();
+
+    request.open("GET", query);
+    request.responseType = "text";
+    console.log(request.response)
+    request.onload = () => {
+      parent.postMessage({ pluginMessage: request.response }, "*");
+    };
+    request.send();
+  }; -->
+
+  <!-- // document.getElementById('cancel').onclick = () => {
+  //   parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  // }
+</script> -->
+
+<script>
+  const hipsum = document.getElementById('sentences');
+  const count = parseInt(hipsum.value, 10);
+  const query = 'https://hipsum.co/api/?type=hipster-centric&sentences=' + count
+
+  window.onmessage = async (event) => {
+    if (event.data.pluginMessage.type === 'networkRequest') {
+      let request = new XMLHttpRequest()
+
+      request.open('GET', query)
+      request.responseType = 'text'
+      request.onload = () => {
+        window.parent.postMessage({pluginMessage: request.response}, '*')
+      };
+      request.send()
+    }
+  }
+</script>
